@@ -1,3 +1,4 @@
+const axios = require('axios')
 const GameModel = require('../models/game.model')
 
 const getAllGames = async (req, res) => {
@@ -26,9 +27,37 @@ const getOneGame = async (req, res) => {
 
 const createGame = async (req, res) => {
   try {
-    const game = await GameModel.create(req.body)
+    const findGame = await GameModel.findOne({
+      where: {
+        title: req.body.title
+      }
+    })
 
-    res.status(200).json({ game, message: 'Game created correctly' })
+    if (!findGame) {
+      try {
+        const response = await axios({
+          method: 'post',
+          url: process.env.API_URL,
+          headers: {
+            "Client-ID": process.env.CLIENT_ID,
+            Authorization: `Bearer ${process.env.API_TOKEN}`
+          },
+          data: `fields *;
+          where name = ${JSON.stringify(req.body.title)};`
+        })
+        console.log(response.data[0].name)
+        if (response.data.length > 0) {
+          const game = await GameModel.create({ title: response.data[0].name })
+          return res.status(200).json({ game, message: 'Game created' })
+        } else {
+          return res.status(404).send('Game not found in external API')
+        }
+      } catch (error) {
+        res.status(500).send('Something is wrong with the response of the API')
+      }
+    }
+
+    res.status(200).send('Game already exist')
   } catch (error) {
     console.log(error)
     res.status(500).send('Error creating the game')
