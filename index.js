@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const sequelize = require('./db')
-const dbSync = require('./db/sync')
+const dbSync = require('./db/models')
 
 const app = express()
 
