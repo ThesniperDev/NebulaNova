@@ -13,6 +13,7 @@ const getAllReviews = async (req, res) => {
 }
 
 const getAllReviewsByUser = async (req, res) => {
+    console.log(req.params.userId)
     try {
         const reviews = await ReviewModel.findAll({
             where: {
