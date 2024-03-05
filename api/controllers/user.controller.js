@@ -1,4 +1,5 @@
 const UserModel = require('../models/user.model')
+const ListModel = require('../models/list.model')
 
 const getAllUsers = async (req, res) => {
   try {
@@ -24,5 +25,5 @@ const createUser = async (req, res) => {
 
 module.exports = {
   getAllUsers,
-  createUser
+  createUser,
 } 

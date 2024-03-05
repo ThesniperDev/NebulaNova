@@ -1,4 +1,5 @@
 const ListModel = require('../models/list.model')
+const GameModel = require('../models/game.model')
 
 const getAllLists = async (req, res) => {
     try {
@@ -26,7 +27,11 @@ const getOneList = async (req, res) => {
 
 const createList = async (req, res) => {
     try {
-        const list = await ListModel.create(req.body)
+        const userId = res.locals.user.id
+        const list = await ListModel.create({
+            title: req.body.title,
+            userId: userId
+        })
         res.status(200).json({ message: 'List created', list })
     } catch (error) {
         console.log(error)
@@ -72,5 +77,5 @@ module.exports = {
     getOneList,
     createList,
     updateList,
-    deleteList
+    deleteList,
 }
