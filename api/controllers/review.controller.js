@@ -1,4 +1,6 @@
 const ReviewModel = require('../models/review.model')
+const GameModel = require('../models/game.model')
+
 
 const getAllReviews = async (req, res) => {
     try {
@@ -12,12 +14,11 @@ const getAllReviews = async (req, res) => {
     }
 }
 
-const getAllReviewsByUser = async (req, res) => {
-    console.log(req.params.userId)
+const getAUserReviews = async (req, res) => {
     try {
         const reviews = await ReviewModel.findAll({
             where: {
-                userId : req.params.userId
+                userId : res.locals.user.id
             }
         })
 
@@ -31,6 +32,10 @@ const getAllReviewsByUser = async (req, res) => {
 
 const createReview  = async (req, res) => {
     try {
+        const game =  await GameModel.findByPk(req.params.gameId)
+        if (!game) return res.status(404).send('Game not found')
+        req.body.userId = res.locals.user.id
+        req.body.gameId = parseInt(req.params.gameId) 
         const review = await ReviewModel.create(req.body)
          res.status(200).json({ review, message: 'Review created' })
     } catch (error) {
@@ -65,7 +70,7 @@ const deleteReview = async (req, res) => {
             }
         })
         if (review) {
-			return res.status(200).json({ message: 'Review deleted', review: review })
+			return res.status(200).json({ message: 'Review deleted', review: req.params.id })
 		} else {
 			return res.status(404).send('Review not found')
 		}        
@@ -76,7 +81,7 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
     getAllReviews,
-    getAllReviewsByUser,
+    getAUserReviews,
     createReview,
     updateReview, 
     deleteReview

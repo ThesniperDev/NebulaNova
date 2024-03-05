@@ -1,12 +1,11 @@
 const router = require('express').Router()
-const { getAllReviews, getAllReviewsByUser, createReview, updateReview, deleteReview } = require('../controllers/review.controller')
-//const { checkAuth } = require('../middleware/checkAuth.middleware')
+const { getAllReviews, getAUserReviews, createReview, updateReview, deleteReview } = require('../controllers/review.controller')
+const { checkAuth } = require('../middleware/checkAuth.middleware')
 
-router.get('/', /* checkAuth, */ getAllReviews)
-router.get('/:userId', /* checkAuth, */ getAllReviewsByUser)
+router.get('/all', checkAuth, getAllReviews)
+router.get('/', checkAuth,  getAUserReviews)
 
-//router.post('/', /* checkAuth, */ createReview )
-router.post('/', createReview)
+router.post('/:gameId', checkAuth, createReview )
 router.put('/:id', updateReview)
 router.delete('/:id', deleteReview)
 

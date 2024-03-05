@@ -1,6 +1,7 @@
 const UserModel = require('../api/models/user.model')
 const GameModel = require('../api/models/game.model')
 const UserGameModel = require('../api/models/userGame.model')
+const ReviewModel = require('../api/models/review.model')
 
 const dbSync = async () => {
   try {
