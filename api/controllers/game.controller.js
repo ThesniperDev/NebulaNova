@@ -34,6 +34,9 @@ const createGame = async (req, res) => {
       }
     })
 
+    const gameDb = await res.locals.user.hasGames(findGame)
+    console.log(gameDb)
+
     if (!findGame) {
       try {
         const response = await axios({
@@ -65,8 +68,19 @@ const createGame = async (req, res) => {
         res.status(500).send('Something is wrong with the response of the API')
       }
     }
+    if (findGame && gameDb === false) {
+      res.locals.user.addGames(findGame,
+        {
+          through:
+          {
+            status: req.body.status,
+            platform: req.body.platform
+          }
+        })
+      return res.status(200).json({ findGame, message: 'Game created' })
+    }
 
-    res.status(200).json({ findGame: findGame.title, message: 'Game already exist' })
+    return res.status(208).send('The game was already in the collection')
   } catch (error) {
     console.log(error)
     res.status(500).send('Error creating the game')
