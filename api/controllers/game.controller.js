@@ -42,12 +42,12 @@ const createGame = async (req, res) => {
             "Client-ID": process.env.CLIENT_ID,
             Authorization: `Bearer ${process.env.API_TOKEN}`
           },
-          data: `fields id,name,cover.url;
+          data: `fields id,name,cover.url,genres.name;
           where name = ${JSON.stringify(req.body.title)};`
         })
         console.log(response.data)
         if (response.data.length > 0) {
-          const game = await GameModel.create({ title: response.data[0].name, image: response.data[0].cover.url })
+          const game = await GameModel.create({ title: response.data[0].name, image: response.data[0].cover.url, genre: response.data[0].genres[0].name })
           return res.status(200).json({ game, message: 'Game created' })
         } else {
           return res.status(404).send('Game not found in external API')

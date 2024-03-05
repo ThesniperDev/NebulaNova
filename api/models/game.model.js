@@ -11,9 +11,6 @@ const GameModel = sequelize.define('game', {
   },
   genre: {
     type: DataTypes.STRING
-  },
-  platform: {
-    type: DataTypes.STRING
   }
 })
 
