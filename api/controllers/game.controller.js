@@ -1,5 +1,6 @@
 const axios = require('axios')
 const GameModel = require('../models/game.model')
+const UserGameModel = require('../models/userGame.model')
 
 const getAllGames = async (req, res) => {
   try {
@@ -33,6 +34,9 @@ const createGame = async (req, res) => {
       }
     })
 
+    const gameDb = await res.locals.user.hasGames(findGame)
+    console.log(gameDb)
+
     if (!findGame) {
       try {
         const response = await axios({
@@ -42,12 +46,20 @@ const createGame = async (req, res) => {
             "Client-ID": process.env.CLIENT_ID,
             Authorization: `Bearer ${process.env.API_TOKEN}`
           },
-          data: `fields id,name,cover.url;
+          data: `fields id,name,cover.url,genres.name;
           where name = ${JSON.stringify(req.body.title)};`
         })
         console.log(response.data)
         if (response.data.length > 0) {
-          const game = await GameModel.create({ title: response.data[0].name, image: response.data[0].cover.url })
+          const game = await GameModel.create({ title: response.data[0].name, image: response.data[0].cover.url, genre: response.data[0].genres[0].name })
+          res.locals.user.addGames(game,
+            {
+              through:
+              {
+                status: req.body.status,
+                platform: req.body.platform
+              }
+            })
           return res.status(200).json({ game, message: 'Game created' })
         } else {
           return res.status(404).send('Game not found in external API')
@@ -56,8 +68,19 @@ const createGame = async (req, res) => {
         res.status(500).send('Something is wrong with the response of the API')
       }
     }
+    if (findGame && gameDb === false) {
+      res.locals.user.addGames(findGame,
+        {
+          through:
+          {
+            status: req.body.status,
+            platform: req.body.platform
+          }
+        })
+      return res.status(200).json({ findGame, message: 'Game created' })
+    }
 
-    res.status(200).json({ findGame: findGame.title, message: 'Game already exist' })
+    return res.status(208).send('The game was already in the collection')
   } catch (error) {
     console.log(error)
     res.status(500).send('Error creating the game')

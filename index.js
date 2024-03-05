@@ -2,8 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const sequelize = require('./db')
-const { dbSync, addRelationsToModels }= require('./db/models')
-
+const { dbSync, addRelationsToModels } = require('./db/models')
 
 const app = express()
 
@@ -15,6 +14,7 @@ const checkDb = async () => {
   try {
     await sequelize.authenticate()
     console.log('Connected to NebulaNova')
+    addRelationsToModels()
     await dbSync()
     addRelationsToModels()
   } catch (error) {
