@@ -1,5 +1,6 @@
 const axios = require('axios')
 const GameModel = require('../models/game.model')
+const UserGameModel = require('../models/userGame.model')
 
 const getAllGames = async (req, res) => {
   try {
@@ -48,6 +49,14 @@ const createGame = async (req, res) => {
         console.log(response.data)
         if (response.data.length > 0) {
           const game = await GameModel.create({ title: response.data[0].name, image: response.data[0].cover.url, genre: response.data[0].genres[0].name })
+          res.locals.user.addGames(game,
+            {
+              through:
+              {
+                status: req.body.status,
+                platform: req.body.platform
+              }
+            })
           return res.status(200).json({ game, message: 'Game created' })
         } else {
           return res.status(404).send('Game not found in external API')
