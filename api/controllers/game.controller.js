@@ -4,7 +4,9 @@ const UserGameModel = require('../models/userGame.model')
 
 const getAllGames = async (req, res) => {
   try {
-    const games = await GameModel.findAll()
+    const user = res.locals.user
+
+    const games = await user.getGames()
 
     if (!games) return res.status(404).send('Games not found')
     res.status(200).json(games)
@@ -18,8 +20,13 @@ const getOneGame = async (req, res) => {
   try {
     const game = await GameModel.findByPk(req.params.id)
 
+    const user = res.locals.user
+
+    const gameCollection = await user.hasGame(game)
+
     if (!game) return res.status(404).send('Game not found')
-    res.status(200).json(game)
+    if (gameCollection === false) return res.status(404).send('This game are not in your collection')
+    if (game && gameCollection) res.status(200).json(game)
   } catch (error) {
     console.log(error)
     res.status(500).send('Error getting the game')
@@ -89,16 +96,25 @@ const createGame = async (req, res) => {
 
 const updateGame = async (req, res) => {
   try {
-    const [gameExist, game] = await GameModel.update(req.body, {
-      returning: true,
-      where: {
-        id: req.params.id
-      }
-    })
+    const game = await GameModel.findByPk(req.params.id)
+    const user = res.locals.user
 
-    if (gameExist !== 0) return res.status(200).json({ game, message: 'Game updated correctly' })
+    const gameCollection = await user.hasGame(game)
 
-    res.status(404).send('Game not found')
+    if (!game) return res.status(404).send('Game Not found')
+
+    if (gameCollection === false) return res.status(404).send('This game are not in your collection')
+
+    if (gameCollection) {
+      const updateGame = await UserGameModel.update(req.body, {
+        where: {
+          UserId: res.locals.user.id
+        }
+      })
+
+      return res.status(200).json({ updateGame, message: `${updateGame} has been updated successfully` })
+    }
+
   } catch (error) {
     console.log(error)
     res.status(500).send('Error updating the game')
@@ -107,14 +123,21 @@ const updateGame = async (req, res) => {
 
 const deleteGame = async (req, res) => {
   try {
-    const game = await GameModel.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
+    const game = await GameModel.findByPk(req.params.id)
+    const user = res.locals.user
 
-    if (!game) return res.status(404).send('Game not found')
-    res.status(200).json({ game, message: 'Game eliminated correctly' })
+    const gameCollection = await user.hasGame(game)
+
+    if (!game) return res.status(404).send('Game Not found')
+
+    if (gameCollection === false) return res.status(404).send('This game are not in your collection')
+
+    if (gameCollection) {
+      const deleteGame = await user.removeGame(game)
+
+      return res.status(200).json({ deleteGame, message: `${deleteGame} has been deleted successfully` })
+    }
+
   } catch (error) {
     console.log(error)
     res.status(500).send('Error deleting the game')
@@ -128,5 +151,3 @@ module.exports = {
   updateGame,
   deleteGame
 }
-
-//
