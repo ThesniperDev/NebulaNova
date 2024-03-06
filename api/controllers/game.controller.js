@@ -9,7 +9,7 @@ const getAllGames = async (req, res) => {
     res.status(200).json(games)
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error getting all Games')
+    res.status(500).send('Error getting all games')
   }
 }
 
@@ -22,7 +22,7 @@ const getOneGame = async (req, res) => {
     res.status(200).json(game)
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error getting all Games')
+    res.status(500).send('Error getting the game')
   }
 }
 
@@ -33,7 +33,7 @@ const createGame = async (req, res) => {
     res.status(200).json({ game, message: 'Game created succesfully' })
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error getting all Games')
+    res.status(500).send('Error creating the game')
   }
 }
 
@@ -54,7 +54,7 @@ const updateGame = async (req, res) => {
 
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error getting all Games')
+    res.status(500).send('Error updating the game')
   }
 }
 
@@ -71,7 +71,7 @@ const deleteGame = async (req, res) => {
     res.status(200).json({ game, message: 'Game deleted successfully' })
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error getting all Games')
+    res.status(500).send('Error deleting the game')
   }
 }
 
