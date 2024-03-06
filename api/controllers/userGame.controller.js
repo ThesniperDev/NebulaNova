@@ -112,7 +112,7 @@ const updateUserGame = async (req, res) => {
         }
       })
 
-      return res.status(200).json({ updateGame, message: `${updateGame} has been updated successfully` })
+      return res.status(200).json({ updateGame, message: `${game.dataValues.title} has been updated successfully` })
     }
 
   } catch (error) {
@@ -135,7 +135,7 @@ const deleteUserGame = async (req, res) => {
     if (gameCollection) {
       const deleteGame = await user.removeGame(game)
 
-      return res.status(200).json({ deleteGame, message: `${deleteGame} has been deleted successfully` })
+      return res.status(200).json({ deleteGame, message: `${game.dataValues.title} has been deleted successfully` })
     }
 
   } catch (error) {

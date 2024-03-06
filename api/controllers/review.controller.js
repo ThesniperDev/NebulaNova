@@ -30,7 +30,7 @@ const getOneReview = async (req, res) => {
 
 //////////////// REGISTERED USERS ///////////////////
 
-const getAUserReviews = async (req, res) => {
+const getUserReviews = async (req, res) => {
     try {
         const reviews = await ReviewModel.findAll({
             where: {
@@ -140,7 +140,7 @@ const deleteReview = async (req, res) => {
 module.exports = {
     getAllReviews,
     getOneReview,
-    getAUserReviews,
+    getUserReviews,
     createUserReview,
     updateUserReview, 
     deleteUserReview,
