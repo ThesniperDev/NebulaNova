@@ -3,21 +3,28 @@ const GameModel = require('../models/game.model')
 
 const getAllLists = async (req, res) => {
   try {
-    const lists = await ListModel.findAll()
+    const userId = res.locals.user.id
+    const lists = await ListModel.findAll({
+      where: {
+        userId: userId
+      }
+    })
 
     if (!lists) return res.status(404).send('Lists not found')
     res.status(200).json(lists)
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error getting the lists')
+    res.status(500).send('Error getting all lists')
   }
 }
 
 const getOneList = async (req, res) => {
   try {
+    const userId = res.locals.user.id
     const list = await ListModel.findOne({
       where: {
-        id: req.params.id
+        id: req.params.id,
+        userId: userId
       }
     })
 
@@ -46,9 +53,11 @@ const createList = async (req, res) => {
 
 const updateList = async (req, res) => {
   try {
+    const userId = res.locals.user.id
     const list = await ListModel.update(req.body, {
       where: {
-        id: req.params.id
+        id: req.params.id,
+        userId: userId
       }
     })
 
@@ -61,9 +70,11 @@ const updateList = async (req, res) => {
 
 const deleteList = async (req, res) => {
   try {
-    const list = await GameModel.destroy({
+    const userId = res.locals.user.id
+    const list = await ListModel.destroy({
       where: {
-        id: req.params.id
+        id: req.params.id,
+        userId: userId
       }
     })
 

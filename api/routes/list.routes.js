@@ -3,10 +3,10 @@ const { getAllLists, getOneList, createList, updateList, deleteList, addGamesLis
 const { checkAuth } = require('../middleware/checkAuth.middleware')
 
 router.get('/', checkAuth, getAllLists)
-router.get('/:id', getOneList)
+router.get('/:id', checkAuth, getOneList)
 router.post('/', checkAuth, createList)
-router.put('/:id', updateList)
-router.delete('/:id', deleteList)
+router.put('/:id', checkAuth, updateList)
+router.delete('/:id', checkAuth, deleteList)
 router.post('/:id', checkAuth, addGamesList)
 
 module.exports = router
