@@ -3,6 +3,7 @@ const GameModel = require('../api/models/game.model')
 const UserGameModel = require('../api/models/userGame.model')
 const ListModel = require('../api/models/list.model')
 const GameListModel = require('../api/models/gameList.model')
+const ReviewModel = require('../api/models/review.model')
 
 const dbSync = async () => {
   try {
@@ -19,6 +20,10 @@ const dbSync = async () => {
 
 const addRelationsToModels = () => {
   try {
+    UserModel.hasMany(ReviewModel)
+    ReviewModel.belongsTo(UserModel)
+    GameModel.hasMany(ReviewModel)
+    ReviewModel.belongsTo(GameModel)
     UserModel.belongsToMany(GameModel, { through: UserGameModel })
     GameModel.belongsToMany(UserModel, { through: UserGameModel })
     UserModel.hasMany(ListModel)

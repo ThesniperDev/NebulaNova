@@ -16,6 +16,7 @@ const checkDb = async () => {
     console.log('Connected to NebulaNova')
     addRelationsToModels()
     await dbSync()
+    addRelationsToModels()
   } catch (error) {
     throw new Error(error)
   }
