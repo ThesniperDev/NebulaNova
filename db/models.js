@@ -12,6 +12,7 @@ const dbSync = async () => {
     //await UserGameModel.sync()
     //await ListModel.sync()
     //await GameListModel.sync()
+    //await ReviewModel.sync()
     console.log('All models synchronized')
   } catch (error) {
     throw new Error(error)
