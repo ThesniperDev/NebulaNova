@@ -15,7 +15,7 @@ const getAllBadges = async (req, res) => {
 
 const getOneBadge = async (req, res) => {
     try {
-        const badge = await BadgeModel.findbyPk({
+        const badge = await BadgeModel.findByPk({
             where: {
                 id: req.params.id
             }

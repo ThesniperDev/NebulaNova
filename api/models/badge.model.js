@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize')
 const sequelize = require('../../db')
 
 const BadgeModel = sequelize.define('badge',{
-    badgeName: {
+    title: {
         type: DataTypes.STRING,
         allowNull: false
     },
