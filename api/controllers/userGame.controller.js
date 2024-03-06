@@ -56,7 +56,6 @@ const createUserGame = async (req, res) => {
           data: `fields id,name,cover.url,genres.name;
           where name = ${JSON.stringify(req.body.title)};`
         })
-        console.log(response.data)
         if (response.data.length > 0) {
           const game = await GameModel.create({ title: response.data[0].name, image: response.data[0].cover.url, genre: response.data[0].genres[0].name })
           res.locals.user.addGames(game,
@@ -87,7 +86,7 @@ const createUserGame = async (req, res) => {
       return res.status(200).json({ findGame, message: 'Game created' })
     }
 
-    return res.status(208).send('The game was already in the collection')
+    return res.status(500).send('The game was already in the collection')
   } catch (error) {
     console.log(error)
     res.status(500).send('Error creating the game')
