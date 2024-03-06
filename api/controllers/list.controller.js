@@ -1,5 +1,4 @@
 const ListModel = require('../models/list.model')
-const GameModel = require('../models/game.model')
 
 const getAllLists = async (req, res) => {
   try {
@@ -86,45 +85,12 @@ const deleteList = async (req, res) => {
   }
 }
 
-const addGamesList = async (req, res) => {
-  try {
-    const list = await ListModel.findOne({
-      where: {
-        id: req.params.id
-      }
-    })
 
-    const game = await GameModel.findOne({
-      where: {
-        title: req.body.title
-      }
-    })
-
-    const listDb = await res.locals.user.hasList(list)
-    console.log(listDb)
-
-    const gameDb = await res.locals.user.hasGame(game)
-    console.log(gameDb)
-
-    if (listDb === true && gameDb === true) {
-      list.addGames(game)
-      return res.status(200).send(`${game} added to the list`)
-    } else if (game === false) {
-      return res.status(401).send(`You dont have ${game} in your collection`)
-    } else {
-      return res.status(401).send('You don`t have any list created')
-    }
-  } catch (error) {
-    console.log(error)
-    res.status(500).send('Error adding game to the list')
-  }
-}
 
 module.exports = {
   getAllLists,
   getOneList,
   createList,
   updateList,
-  deleteList,
-  addGamesList
+  deleteList
 }
