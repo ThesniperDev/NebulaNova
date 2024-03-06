@@ -1,12 +1,11 @@
-const axios = require('axios')
 const GameModel = require('../models/game.model')
-const UserGameModel = require('../models/userGame.model')
 
 const getAllGames = async (req, res) => {
   try {
     const games = await GameModel.findAll()
 
-    if (!games) return res.status(404).send('Games not found')
+    if (!games) return res.status(404).send('Games not founds')
+
     res.status(200).json(games)
   } catch (error) {
     console.log(error)
@@ -19,6 +18,7 @@ const getOneGame = async (req, res) => {
     const game = await GameModel.findByPk(req.params.id)
 
     if (!game) return res.status(404).send('Game not found')
+
     res.status(200).json(game)
   } catch (error) {
     console.log(error)
@@ -28,59 +28,9 @@ const getOneGame = async (req, res) => {
 
 const createGame = async (req, res) => {
   try {
-    const findGame = await GameModel.findOne({
-      where: {
-        title: req.body.title
-      }
-    })
+    const game = await GameModel.create(req.body)
 
-    const gameDb = await res.locals.user.hasGames(findGame)
-    console.log(gameDb)
-
-    if (!findGame) {
-      try {
-        const response = await axios({
-          method: 'post',
-          url: process.env.API_URL,
-          headers: {
-            "Client-ID": process.env.CLIENT_ID,
-            Authorization: `Bearer ${process.env.API_TOKEN}`
-          },
-          data: `fields id,name,cover.url,genres.name;
-          where name = ${JSON.stringify(req.body.title)};`
-        })
-        console.log(response.data)
-        if (response.data.length > 0) {
-          const game = await GameModel.create({ title: response.data[0].name, image: response.data[0].cover.url, genre: response.data[0].genres[0].name })
-          res.locals.user.addGames(game,
-            {
-              through:
-              {
-                status: req.body.status,
-                platform: req.body.platform
-              }
-            })
-          return res.status(200).json({ game, message: 'Game created' })
-        } else {
-          return res.status(404).send('Game not found in external API')
-        }
-      } catch (error) {
-        res.status(500).send('Something is wrong with the response of the API')
-      }
-    }
-    if (findGame && gameDb === false) {
-      res.locals.user.addGames(findGame,
-        {
-          through:
-          {
-            status: req.body.status,
-            platform: req.body.platform
-          }
-        })
-      return res.status(200).json({ findGame, message: 'Game created' })
-    }
-
-    return res.status(208).send('The game was already in the collection')
+    res.status(200).json({ game, message: 'Game created succesfully' })
   } catch (error) {
     console.log(error)
     res.status(500).send('Error creating the game')
@@ -96,9 +46,12 @@ const updateGame = async (req, res) => {
       }
     })
 
-    if (gameExist !== 0) return res.status(200).json({ game, message: 'Game updated correctly' })
+    if (gameExist !== 0) {
+      return res.status(200).json({ game, message: 'Game updated' })
+    } else {
+      return res.status(404).send('Game not found')
+    }
 
-    res.status(404).send('Game not found')
   } catch (error) {
     console.log(error)
     res.status(500).send('Error updating the game')
@@ -114,7 +67,8 @@ const deleteGame = async (req, res) => {
     })
 
     if (!game) return res.status(404).send('Game not found')
-    res.status(200).json({ game, message: 'Game eliminated correctly' })
+
+    res.status(200).json({ game, message: 'Game deleted successfully' })
   } catch (error) {
     console.log(error)
     res.status(500).send('Error deleting the game')
@@ -128,5 +82,3 @@ module.exports = {
   updateGame,
   deleteGame
 }
-
-//
