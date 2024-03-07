@@ -14,7 +14,7 @@ const dbSync = async () => {
     //await ListModel.sync()
     //await GameListModel.sync()
     //await ReviewModel.sync()
-    //await sequelize.sync({ alter: true })
+    //await sequelize.sync({ alter: true }) ==> Descomentar el último
     console.log('All models synchronized')
   } catch (error) {
     throw new Error(error)
