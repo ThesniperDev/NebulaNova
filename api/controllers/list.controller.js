@@ -43,7 +43,7 @@ const createList = async (req, res) => {
       userId: userId
     })
 
-    res.status(200).json({ list, message: 'List creted sucessfully' })
+    res.status(200).json({ list, message: 'List created sucessfully' })
   } catch (error) {
     console.log(error)
     res.status(500).send('Error creating the list')
@@ -78,7 +78,7 @@ const deleteList = async (req, res) => {
     })
 
     if (!list) return res.status(404).send('List not found')
-    res.status(200).json({ list, message: 'List eliminated correctly' })
+    res.status(200).json({ list, message: 'List deleted correctly' })
   } catch (error) {
     console.log(error)
     res.status(500).send('Error deleting the list')

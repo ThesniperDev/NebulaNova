@@ -14,11 +14,7 @@ const getAllBadges = async (req, res) => {
 
 const getOneBadge = async (req, res) => {
     try {
-        const badge = await BadgeModel.findByPk({
-            where: {
-                id: req.params.id
-            }
-        })
+        const badge = await BadgeModel.findByPk(req.params.id)
         if (!badge) return res.status(404).send('Badge not found')
         res.status(200).json(badge)
     } catch (error) {

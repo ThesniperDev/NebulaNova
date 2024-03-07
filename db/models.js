@@ -18,7 +18,7 @@ const dbSync = async () => {
     //await ReviewModel.sync()
     //await BadgeModel.sync()
     //await UserBadgeModel.sync()
-    //await sequelize.sync({ alter: true }) ==> Descomentar el último
+    //await sequelize.sync({ alter: true }) /* ==> Descomentar el último */
     console.log('All models synchronized')
   } catch (error) {
     throw new Error(error)
