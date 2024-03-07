@@ -4,6 +4,7 @@ const UserGameModel = require('../api/models/userGame.model')
 const ListModel = require('../api/models/list.model')
 const GameListModel = require('../api/models/gameList.model')
 const ReviewModel = require('../api/models/review.model')
+const sequelize = require('./index')
 
 const dbSync = async () => {
   try {
@@ -21,6 +22,7 @@ const dbSync = async () => {
 
 const addRelationsToModels = () => {
   try {
+    UserModel.belongsToMany(UserModel, { through: "friend_list", as: "friend" })
     UserModel.hasMany(ReviewModel)
     ReviewModel.belongsTo(UserModel)
     GameModel.hasMany(ReviewModel)
