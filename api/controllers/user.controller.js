@@ -13,7 +13,7 @@ const getAllUsers = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
-  try {
+  try { 
     const user = await UserModel.create(req.body)
     res.status(200).json({ user, message: 'User created' })
   } catch (error) {

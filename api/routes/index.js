@@ -7,5 +7,7 @@ router.use('/list', require('./list.routes'))
 router.use('/gamelist', require('./gameList.routes'))
 router.use('/review', require('./review.routes'))
 router.use('/usereview', require('./userReview.routes'))
+router.use('/badge', require('./badge.routes'))
+router.use('/userbadge', require('./userBadge.routes'))
 
 module.exports = router
