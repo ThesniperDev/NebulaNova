@@ -1,5 +1,4 @@
 const BadgeModel = require('../models/badge.model')
-const UserModel = require('../models/user.model')
 
 const getAllBadges = async (req, res) => {
     try {

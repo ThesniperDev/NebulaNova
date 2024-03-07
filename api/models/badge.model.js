@@ -8,7 +8,7 @@ const BadgeModel = sequelize.define('badge',{
     },
     image: {
         type: DataTypes.STRING,
-        allowNull: false
+        /* allowNull: false */
     },
     description: {
         type: DataTypes.STRING,
