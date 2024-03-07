@@ -36,3 +36,45 @@ If you decide not to register, don't worry, at least you will be able to see the
 
 
 ![Screenshot from 2024-03-07 15-58-39](https://github.com/ThesniperDev/NebulaNova/assets/42233569/b8f03f5b-dbdf-4f47-98d8-8aaf99156c1f)
+
+
+## ENDPOINTS
+
+### User
+
+| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
+| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
+| POST   | /signup                   | NO     | -            | Allows you to sign up in the app          | -                          | -                                     |
+| POST   | /login                    | NO     | -            | Allows you to log in the app              | -                          | -                                     |
+| GET    | /users                    | YES    | User         | Gets all users in the app                 | -                          | [{ users }]                           |
+| GET    | /friend                   | YES    | User         | Show you all your added friends           | -                          | [{ friends }]                         |
+| POST   | /friend                   | YES    | User         | Allows you to add a user a friend         | friendId                   | Now 'user' and you are friends        |
+| DELETE | /friend                   | YES    | User         | Deletes a specific friend                 | friendId                   | Now 'user' and you are not friends    |
+
+
+## Game
+
+| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
+| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
+| GET    | /                         | NO     | -            | Gives you the games on the database       | -                          | [{ games }]                           |
+| GET    | /                         | NO     | -            | Gives you a specific game                 | id                         | { game }                              |
+| POST   | /                         | YES    | Admin        | Adds a game from the API if necessary     | -                          | { game }, Game created succesfully    |
+| PUT    | /                         | YES    | Admin        | Updates a chosed game's information       | id                         | { game }, Game updated                |
+| DELETE | /                         | YES    | Admin        | Deletes an existing game                  | id                         | { game }, Game deleted sucesfully     |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
