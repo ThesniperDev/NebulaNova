@@ -47,7 +47,7 @@ const deleteReview = async (req, res) => {
             }
         })
         if (review) {
-            return res.status(200).json({ message: 'Review deleted', review: req.params.id })
+            return res.status(200).json({ message: 'Review deleted', review: req.params.reviewId })
         } else {
             return res.status(404).send('Review not found')
         }
