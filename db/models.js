@@ -16,6 +16,7 @@ const dbSync = async () => {
     //await ListModel.sync()
     //await GameListModel.sync()
     //await ReviewModel.sync()
+    //await BadgeModel.sync()
     //await UserBadgeModel.sync()
     //await sequelize.sync({ alter: true })
     console.log('All models synchronized')

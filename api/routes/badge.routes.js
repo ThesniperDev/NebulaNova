@@ -1,10 +1,11 @@
 const router = require('express').Router()
 const { getAllBadges, getOneBadge, createBadge, updateBadge, deleteBadge } = require('../controllers/badge.controller')
+const { checkAuth, checkAdmin } = require('../middleware/checkAuth.middleware')
 
-router.get('/', getAllBadges)
-router.get('/:id', getOneBadge)
-router.post('/', createBadge)
-router.put('/:id', updateBadge)
-router.delete('/:id', deleteBadge)
+router.get('/', checkAuth, getAllBadges)
+router.get('/:id', checkAuth, getOneBadge)
+router.post('/', checkAuth, checkAdmin, createBadge)
+router.put('/:id', checkAuth, checkAdmin, updateBadge)
+router.delete('/:id', checkAuth, checkAdmin, deleteBadge)
 
 module.exports = router
