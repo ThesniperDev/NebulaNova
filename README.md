@@ -63,6 +63,27 @@ If you decide not to register, don't worry, at least you will be able to see the
 | DELETE | /                         | YES    | Admin        | Deletes an existing game                  | id                         | { game }, Game deleted sucesfully     |
 
 
+## List
+
+| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
+| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
+| GET    | /                         | YES    | User         | Gives you all your lists                  | -                          | [{ lists }]                           |
+| GET    | /                         | YES    | User         | Gives you a specific list                 | id                         | { list }                              |
+| POST   | /                         | YES    | User         | Creates a list                            | -                          | { list }, List created succesfully    |
+| PUT    | /                         | YES    | User         | Updates a chosed list's information       | id                         | { list }, List updated succesfully    |
+| DELETE | /                         | YES    | User         | Deletes an existing list                  | id                         | { list }, List deleted correctly      |
+
+## Badge
+
+| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
+| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
+| GET    | /                         | YES    | User         | Gives you all your badges                  | -                          | [{ badge }]                          |
+| GET    | /                         | YES    | User         | Gives you a specific badge                 | id                         | { badge }                            |
+| POST   | /                         | YES    | Admin        | Adds a badge                               | -                          | { badge }                            |
+| PUT    | /                         | YES    | Admin        | Updates a chosed badge's information       | id                         | { badge }, Badge updated             |
+| DELETE | /                         | YES    | Admin        | Deletes an existing badge                  | id                         | Badge removed                        |
+
+
 
 
 
