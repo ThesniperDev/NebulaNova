@@ -62,7 +62,7 @@ If you decide not to register, don't worry, at least you will be able to see the
 | PUT    | /:id                      | YES    | Admin        | Updates a chosed game's information       | id                         | { game }, Game updated                |
 | DELETE | /:id                      | YES    | Admin        | Deletes an existing game                  | id                         | { game }, Game deleted sucesfully     |
 
-## Game List
+## Gamelist
 
 | METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
