@@ -62,16 +62,24 @@ If you decide not to register, don't worry, at least you will be able to see the
 | PUT    | /:id                      | YES    | Admin        | Updates a chosed game's information       | id                         | { game }, Game updated                |
 | DELETE | /:id                      | YES    | Admin        | Deletes an existing game                  | id                         | { game }, Game deleted sucesfully     |
 
+## Game List
+
+| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
+| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
+| GET    | /:listId                  | YES    | User         | Gives all user's list                     | listId                     | [{ list }]                            |
+| GET    | /:listId/:gameId          | YES    | User         | Gives you a game from a specific list     | listId/gameId              | { game }                              |
+| POST   | /:listId                  | YES    | User         | Adds a game from the API if necessary     | -                          | { game }, Game created succesfully    |
+
 
 ## List
 
 | METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
 | GET    | /                         | YES    | User         | Gives you all your lists                  | -                          | [{ lists }]                           |
-| GET    | /                         | YES    | User         | Gives you a specific list                 | id                         | { list }                              |
+| GET    | /:id                      | YES    | User         | Gives you a specific list                 | id                         | { list }                              |
 | POST   | /                         | YES    | User         | Creates a list                            | -                          | { list }, List created succesfully    |
-| PUT    | /                         | YES    | User         | Updates a chosed list's information       | id                         | { list }, List updated succesfully    |
-| DELETE | /                         | YES    | User         | Deletes an existing list                  | id                         | { list }, List deleted correctly      |
+| PUT    | /:id                      | YES    | User         | Updates a chosed list's information       | id                         | { list }, List updated succesfully    |
+| DELETE | /:id                      | YES    | User         | Deletes an existing list                  | id                         | { list }, List deleted correctly      |
 
 ## Badge
 
