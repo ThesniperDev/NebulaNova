@@ -46,21 +46,21 @@ If you decide not to register, don't worry, at least you will be able to see the
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
 | POST   | /signup                   | NO     | -            | Allows you to sign up in the app          | -                          | -                                     |
 | POST   | /login                    | NO     | -            | Allows you to log in the app              | -                          | -                                     |
-| GET    | /users                    | YES    | User         | Gets all users in the app                 | -                          | [{ users }]                           |
-| GET    | /friend                   | YES    | User         | Show you all your added friends           | -                          | [{ friends }]                         |
-| POST   | /friend                   | YES    | User         | Allows you to add a user a friend         | friendId                   | Now 'user' and you are friends        |
-| DELETE | /friend                   | YES    | User         | Deletes a specific friend                 | friendId                   | Now 'user' and you are not friends    |
+| GET    | /users                    | YES    | User         | Gets all users in the app                 | -                          | [{ user }]                           |
+| GET    | /friend                   | YES    | User         | Show you all your added friends           | -                          | [{ user }]                         |
+| POST   | /friend/:friendId         | YES    | User         | Allows you to add a user a friend         | friendId                   | Now 'user' and you are friends        |
+| DELETE | /friend/:friendId         | YES    | User         | Deletes a specific friend                 | friendId                   | Now 'user' and you are not friends    |
 
 
 ## Game
 
 | METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
-| GET    | /                         | NO     | -            | Gives you the games on the database       | -                          | [{ games }]                           |
-| GET    | /                         | NO     | -            | Gives you a specific game                 | id                         | { game }                              |
+| GET    | /                         | NO     | -            | Gives you the games on the database       | -                          | [{ game }]                           |
+| GET    | /:id                      | NO     | -            | Gives you a specific game                 | id                         | { game }                              |
 | POST   | /                         | YES    | Admin        | Adds a game from the API if necessary     | -                          | { game }, Game created succesfully    |
-| PUT    | /                         | YES    | Admin        | Updates a chosed game's information       | id                         | { game }, Game updated                |
-| DELETE | /                         | YES    | Admin        | Deletes an existing game                  | id                         | { game }, Game deleted sucesfully     |
+| PUT    | /:id                      | YES    | Admin        | Updates a chosed game's information       | id                         | { game }, Game updated                |
+| DELETE | /:id                      | YES    | Admin        | Deletes an existing game                  | id                         | { game }, Game deleted sucesfully     |
 
 
 ## List
@@ -78,13 +78,32 @@ If you decide not to register, don't worry, at least you will be able to see the
 | METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
 | GET    | /                         | YES    | User         | Gives you all your badges                  | -                          | [{ badge }]                          |
-| GET    | /                         | YES    | User         | Gives you a specific badge                 | id                         | { badge }                            |
+| GET    | /:id                      | YES    | User         | Gives you a specific badge                 | id                         | { badge }                            |
 | POST   | /                         | YES    | Admin        | Adds a badge                               | -                          | { badge }                            |
-| PUT    | /                         | YES    | Admin        | Updates a chosed badge's information       | id                         | { badge }, Badge updated             |
-| DELETE | /                         | YES    | Admin        | Deletes an existing badge                  | id                         | Badge removed                        |
+| PUT    | /:id                      | YES    | Admin        | Updates a chosed badge's information       | id                         | { badge }, Badge updated             |
+| DELETE | /:id                      | YES    | Admin        | Deletes an existing badge                  | id                         | Badge removed                        |
+
+## Review
+
+| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
+| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
+| GET    | /all                      | NO     | -            | Gives you all reviews                     | -                          | [{ reviews }]                         |
+| GET    | /:reviewId                | NO     | -            | Gives you a specific review               | reviewId                   | { review }                            |
+| PUT    | /admin/:reviewId          | YES    | Admin        | Updates a specific review                 | /admin/:reviewId           | Review updated, 'id review'           |
+| DELETE | /admin/:reviewId          | YES    | Admin        | Deletes you a specific review             | /admin/:reviewId           | Review deleted, 'id review'           |
+
+## Usereview
+
+| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                               |
+| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | ------------------------------------- |
+| GET    | /                         | YES    | User         | Gives all user's reviews                  | /                          | [{ review }]                          |
+| GET    | /:reviewId                | YES    | User         | Gives you a specific user's review        | reviewId                   | { review }                            |
+| POST   | /:gameId                  | YES    | User         | Creates a review                           | gameId                     | { review }, Review created           |
+| PUT    | /:reviewId                | YES    | User         | Updates a review                           | reviedId                   | { review }, Review has been updated  |
+| DELETE | /:reviewId                | YES    | User         | Deletes a review                           | reviewId                   | Review deleted , 'id review'         |
 
 
-
+                            
 
 
 
