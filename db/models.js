@@ -10,14 +10,14 @@ const sequelize = require('./index')
 
 const dbSync = async () => {
   try {
-    //await UserModel.sync()
-    //await GameModel.sync()
-    //await UserGameModel.sync()
-    //await ListModel.sync()
-    //await GameListModel.sync()
-    //await ReviewModel.sync()
-    //await BadgeModel.sync()
-    //await UserBadgeModel.sync()
+    // await UserModel.sync()
+    // await GameModel.sync()
+    // await UserGameModel.sync()
+    // await ListModel.sync()
+    // await GameListModel.sync()
+    // await ReviewModel.sync()
+    // await BadgeModel.sync()
+    // await UserBadgeModel.sync()
     //await sequelize.sync({ alter: true }) /* ==> Descomentar el último */
     console.log('All models synchronized')
   } catch (error) {
