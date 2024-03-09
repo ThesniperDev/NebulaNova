@@ -76,8 +76,8 @@ $ npm run dev
 | POST   | /login            | NO    | -    | Allows you to log in the app      | -           | -                                  |
 | GET    | /users            | YES   | User | Gets all users in the app         | -           | [{ user }]                         |
 | GET    | /friend           | YES   | User | Show you all your added friends   | -           | [{ user }]                         |
-| POST   | /friend/:friendId | YES   | User | Allows you to add a user a friend | friendId    | Now 'user' and you are friends     |
-| DELETE | /friend/:friendId | YES   | User | Deletes a specific friend         | friendId    | Now 'user' and you are not friends |
+| POST   | /friend/:friendId | YES   | User | Allows you to add a user a friend | friendId    | "Now 'user' and you are friends"     |
+| DELETE | /friend/:friendId | YES   | User | Deletes a specific friend         | friendId    | "Now 'user' and you are not friends" |
 
 ## Game
 
@@ -85,17 +85,29 @@ $ npm run dev
 | ------ | -------- | ----- | ----- | ------------------------------------- | ----------- | ---------------------------------- |
 | GET    | /        | NO    | -     | Gives you the games on the database   | -           | [{ game }]                         |
 | GET    | /:id     | NO    | -     | Gives you a specific game             | id          | { game }                           |
-| POST   | /        | YES   | Admin | Adds a game from the API if necessary | -           | { game }, Game created succesfully |
-| PUT    | /:id     | YES   | Admin | Updates a chosed game's information   | id          | { game }, Game updated             |
-| DELETE | /:id     | YES   | Admin | Deletes an existing game              | id          | { game }, Game deleted sucesfully  |
+| POST   | /        | YES   | Admin | Adds a game from the API if necessary | req.body    | { game }, "Game created succesfully" |
+| PUT    | /:id     | YES   | Admin | Updates a chosed game's information   | id +  req.body | { game }, "Game updated"             |
+| DELETE | /:id     | YES   | Admin | Deletes an existing game              | id          | { game }, "Game deleted succesfully"  |
+
+## GameCollection/userGame
+
+| METHOD | ENDPOINT | TOKEN | ROLE  | DESCRIPTION                                                           | POST PARAMS    | RETURNS                            |
+| ------ | -------- | ----- | ----- | --------------------------------------------------------------------- | -------------- | ---------------------------------- |
+| GET    | /        | YES   | User  | Gives all games in the user's game collection                         | -              | [{ game }]                         |
+| GET    | /:id     | YES   | User  | Gives you a specific game from the user's game collection             | id             | { game }                           |
+| POST   | /        | YES   | User  | Adds a game to the user's game collection                             | req.body       | { game }, "Game created"           |
+| PUT    | /:id     | YES   | User  | Updates a chosed game to the user's game collection                   | id +  req.body | { game }, "${title game} has been updated" succesfully" |
+| DELETE | /:id     | YES   | User  | Deletes an existing game to the user's game collection                | id             | { game }, "${title game} has been deleted successfully" |
 
 ## Gamelist
 
-| METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION                           | POST PARAMS   | RETURNS                            |
-| ------ | ---------------- | ----- | ---- | ------------------------------------- | ------------- | ---------------------------------- |
-| GET    | /:listId         | YES   | User | Gives all user's list                 | listId        | [{ list }]                         |
-| GET    | /:listId/:gameId | YES   | User | Gives you a game from a specific list | listId/gameId | { game }                           |
-| POST   | /:listId         | YES   | User | Adds a game from the API if necessary | -             | { game }, Game created succesfully |
+| METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION                           | POST PARAMS   | RETURNS                                                 |
+| ------ | ---------------- | ----- | ---- | ------------------------------------- | ------------- | ------------------------------------------------------- |
+| GET    | /:listId         | YES   | User | Gives all user's list                 | listId        | [{ list }]                                              |
+| GET    | /:listId/:gameId | YES   | User | Gives you a game from a specific list | listId/gameId | { game }                                                |
+| POST   | /:listId         | YES   | User | Adds a game from the API if necessary | listId + req.body.title (game)| "${title game} is already on the list"  |
+| DELETE | /:listId/:gameId | YES   | User | Deletes a game from a list            | listId/gameId | { game } , "${title game} has been deleted successfully"|
+
 
 ## List
 
@@ -103,19 +115,28 @@ $ npm run dev
 | ------ | -------- | ----- | ---- | ----------------------------------- | ----------- | ---------------------------------- |
 | GET    | /        | YES   | User | Gives you all your lists            | -           | [{ lists }]                        |
 | GET    | /:id     | YES   | User | Gives you a specific list           | id          | { list }                           |
-| POST   | /        | YES   | User | Creates a list                      | -           | { list }, List created succesfully |
-| PUT    | /:id     | YES   | User | Updates a chosed list's information | id          | { list }, List updated succesfully |
-| DELETE | /:id     | YES   | User | Deletes an existing list            | id          | { list }, List deleted correctly   |
+| POST   | /        | YES   | User | Creates a list                      | req.body    | { list }, "List created succesfully" |
+| PUT    | /:id     | YES   | User | Updates a chosed list's information | id          | { list }, "List updated succesfully" |
+| DELETE | /:id     | YES   | User | Deletes an existing list            | id          | { list }, "List deleted correctly"   |
 
 ## Badge
 
-| METHOD | ENDPOINT | TOKEN | ROLE  | DESCRIPTION                          | POST PARAMS | RETURNS                  |
-| ------ | -------- | ----- | ----- | ------------------------------------ | ----------- | ------------------------ |
-| GET    | /        | YES   | User  | Gives you all your badges            | -           | [{ badge }]              |
-| GET    | /:id     | YES   | User  | Gives you a specific badge           | id          | { badge }                |
-| POST   | /        | YES   | Admin | Adds a badge                         | -           | { badge }                |
-| PUT    | /:id     | YES   | Admin | Updates a chosed badge's information | id          | { badge }, Badge updated |
-| DELETE | /:id     | YES   | Admin | Deletes an existing badge            | id          | Badge removed            |
+| METHOD | ENDPOINT | TOKEN | ROLE  | DESCRIPTION                          | POST PARAMS | RETURNS                    |
+| ------ | -------- | ----- | ----- | ------------------------------------ | ----------- | ---------------------------|
+| GET    | /        | YES   | User  | Gives you all badges                 | -           | [{ badge }]                |
+| GET    | /:id     | YES   | User  | Gives you a specific badge           | id          | { badge }                  |
+| POST   | /        | YES   | Admin | Adds a badge                         | req.body    | { badge }                  |
+| PUT    | /:id     | YES   | Admin | Updates a chosed badge's information | id          | { badge }, "Badge updated" |
+| DELETE | /:id     | YES   | Admin | Deletes an existing badge            | id          | "Badge removed"            |
+
+## Userbadges
+
+| METHOD | ENDPOINT      | TOKEN | ROLE  | DESCRIPTION                          | POST PARAMS | RETURNS                         |
+| ------ | ------------- | ----- | ----- | ------------------------------------ | ----------- | --------------------------------|
+| GET    | /             | YES   | User  | Gives you all user´s badges          | -           | [{ userbadges }]                |
+| GET    | /:badgeId     | YES   | User  | Gives you a specific user´s badge    | badgeId          | { userbadge }                   |
+| POST   | /             | YES   | Admin | Adds a badge to a user               | req.body    | { userBadge }, "Badge added"    |
+| DELETE | /:badgeId     | YES   | Admin | Deletes a badge to a user            | BadgeId          | "User badge removed"            |
 
 ## Review
 
