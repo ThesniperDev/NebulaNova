@@ -50,13 +50,17 @@ To use this API, you need to refer to the IGDB API documentation: https://api-do
 
 To get started with the Game Tracker API, just get into the repo and run:
 
-- npm i
+```
+$ npm i
+```
 
 ## USAGE
 
 To start the api server just run:
 
-- node index.js
+```
+$ node index.js
+```
 
 ## DATA STRUCTURE AND MODELS
 
