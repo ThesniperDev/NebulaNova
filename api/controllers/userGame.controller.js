@@ -42,7 +42,6 @@ const createUserGame = async (req, res) => {
     })
 
     const gameDb = await res.locals.user.hasGames(findGame)
-    console.log(gameDb)
 
     if (!findGame) {
       try {
