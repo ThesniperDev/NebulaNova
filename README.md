@@ -43,7 +43,7 @@ To use this API, you need to refer to the IGDB API documentation: https://api-do
 ## REQUIREMENTS
 
 - Nodejs
-- Database configuration(create a .env file => Set up the environment variables you are going to use)
+- Database configuration(create a .env file -> Set up the environment variables you are going to use)
 - Save the token you have obtained from the external API (follow the steps from the previous section)
 
 ## INSTALLATION
@@ -59,7 +59,7 @@ $ npm i
 To start the api server just run:
 
 ```
-$ node index.js
+$ npm run dev
 ```
 
 ## DATA STRUCTURE AND MODELS
