@@ -1,3 +1,4 @@
+const GameModel = require('../models/game.model')
 const ReviewModel = require('../models/review.model')
 
 const getAllReviews = async (req, res) => {
@@ -56,13 +57,28 @@ const deleteReview = async (req, res) => {
     }
 }
 
+const getReviewsGameRelation = async (req, res) => {
+    try {
 
+        const reviews = await ReviewModel.findAll({
+            include: GameModel
+        })
+
+        if (!reviews) return res.status(404).send('Reviews not found')
+        res.status(200).json(reviews)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Error getting review')
+    }
+}
 
 
 module.exports = {
     getAllReviews,
     getOneReview,
     updateReview,
-    deleteReview
+    deleteReview,
+    getReviewsGameRelation
 }
 

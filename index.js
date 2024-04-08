@@ -17,7 +17,7 @@ const checkDb = async () => {
     await sequelize.authenticate()
     console.log('Connected to NebulaNova')
     addRelationsToModels()
-    await dbSync()
+    //await dbSync()
   } catch (error) {
     throw new Error(error)
   }

@@ -1,9 +1,10 @@
 const router = require('express').Router()
-const { getAllReviews, getOneReview, updateReview, deleteReview } = require('../controllers/review.controller')
+const { getAllReviews, getOneReview, updateReview, deleteReview, getReviewsGameRelation } = require('../controllers/review.controller')
 const { checkAuth, checkAdmin } = require('../middleware/checkAuth.middleware')
 
 ///////////////////// ALL USERS /////////////////////
 
+router.get('/game', getReviewsGameRelation)
 router.get('/all', getAllReviews)
 router.get('/:reviewId', getOneReview)
 
