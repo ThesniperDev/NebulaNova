@@ -1,4 +1,5 @@
 const GameModel = require('../models/game.model')
+const UserModel = require('../models/user.model')
 const ReviewModel = require('../models/review.model')
 
 const getAllReviews = async (req, res) => {
@@ -61,7 +62,8 @@ const getReviewsGameRelation = async (req, res) => {
     try {
 
         const reviews = await ReviewModel.findAll({
-            include: GameModel
+            include: [GameModel, UserModel]
+            
         })
 
         if (!reviews) return res.status(404).send('Reviews not found')
