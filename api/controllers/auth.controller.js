@@ -13,7 +13,7 @@ const signUp = async (req, res) => {
       email: user.email
     }, process.env.MY_SECRET)
 
-    res.status(200).json({ token, role: user.role, message: 'Token created succesfully' })
+    res.status(200).json({ token, role: user.role, userId: user.id, message: 'Token created succesfully' })
   } catch (error) {
     console.log(error)
     res.status(500).send('Error signing up')
@@ -37,7 +37,7 @@ const logIn = async (req, res) => {
       email: user.email
     }, process.env.MY_SECRET)
 
-    res.status(200).json({ token, role: user.role })
+    res.status(200).json({ token, role: user.role, userId: user.id })
   } catch (error) {
     console.log(error)
     res.status(500).send('Error logging up')
