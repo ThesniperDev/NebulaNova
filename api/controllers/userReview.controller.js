@@ -1,9 +1,11 @@
 const ReviewModel = require('../models/review.model')
 const GameModel = require('../models/game.model')
+const UserModel = require('../models/user.model')
 
 const getUserReviews = async (req, res) => {
   try {
     const reviews = await ReviewModel.findAll({
+      include: [GameModel, UserModel],
       where: {
         userId: res.locals.user.id
       }
@@ -44,7 +46,6 @@ const createUserReview = async (req, res) => {
     if (!game) return res.status(404).send('Game not found')
 
     if (!gameCollection) return res.status(404).send('This game is not in your collection')
-
     const review = await ReviewModel.create({
       description: req.body.description,
       range: req.body.range,
